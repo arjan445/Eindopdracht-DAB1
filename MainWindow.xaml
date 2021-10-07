@@ -7,30 +7,34 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="800">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="192" Margin="266,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="205"/>
-        <Rectangle HorizontalAlignment="Left" Height="192" Margin="45,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="156"/>
-        <ComboBox x:Name="Merk" HorizontalAlignment="Left" Margin="63,58,0,0" VerticalAlignment="Top" Width="120" Loaded="Merk_Loaded" SelectionChanged="Merk_Changed"/>
-        <Label Content="Selecteer automerk" HorizontalAlignment="Left" Margin="67,32,0,0" VerticalAlignment="Top"/>
-        <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="360,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/fiat.jpg"/>
-        <Label x:Name="textHoofdkantoor" Content="Stad:" HorizontalAlignment="Left" Margin="266,60,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="textLand" Content="Land:" HorizontalAlignment="Left" Margin="266,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598"/>
-        <ComboBox x:Name="Type" HorizontalAlignment="Left" Margin="63,123,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,97,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Checked="KW_Checked"/>
-        <RadioButton x:Name="PK" Content="Vermogen in PK" HorizontalAlignment="Left" Margin="63,190,0,0" VerticalAlignment="Top" Checked="PK_Checked"/>
-        <Label Content="Merkgegevens:" HorizontalAlignment="Left" Margin="266,32,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="Modellijst" Margin="45,265,599,394" SelectionChanged="Modellijst_SelectionChanged"/>
-        <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,234,0,0" VerticalAlignment="Top"/>
-        <Rectangle HorizontalAlignment="Left" Height="192" Margin="266,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="205"/>
-        <Label Content="Autogevens:" HorizontalAlignment="Left" Margin="266,265,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Hoofdkantoor" Content="Stad" HorizontalAlignment="Left" Margin="317,60,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Land" Content="Land" HorizontalAlignment="Left" Margin="317,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598"/>
-        <Label x:Name="textHoofdkantoor_Copy" Content="Serie" HorizontalAlignment="Left" Margin="266,294,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="textLand_Copy" Content="Model:" HorizontalAlignment="Left" Margin="266,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598"/>
-        <Label x:Name="Serie" Content="Serie" HorizontalAlignment="Left" Margin="344,294,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Model" Content="Model" HorizontalAlignment="Left" Margin="344,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598"/>
-        <Label x:Name="textLand_Copy1" Content="Vermogen:" HorizontalAlignment="Left" Margin="266,346,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598"/>
-        <Label x:Name="Vermogen" Content="Vermogen" HorizontalAlignment="Left" Margin="344,346,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="69*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle HorizontalAlignment="Left" Height="192" Margin="156,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="205" Grid.Column="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="192" Margin="45,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="156" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="Merk" HorizontalAlignment="Left" Margin="63,58,0,0" VerticalAlignment="Top" Width="120" Loaded="Merk_Loaded" SelectionChanged="Merk_Changed" Grid.ColumnSpan="2"/>
+        <Label Content="Selecteer automerk" HorizontalAlignment="Left" Margin="67,32,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="250,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/fiat.jpg" Grid.Column="1"/>
+        <Label x:Name="textHoofdkantoor" Content="Stad:" HorizontalAlignment="Left" Margin="156,60,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="textLand" Content="Land:" HorizontalAlignment="Left" Margin="156,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <ComboBox x:Name="Type" HorizontalAlignment="Left" Margin="63,123,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,97,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Checked="KW_Checked" Grid.ColumnSpan="2"/>
+        <RadioButton x:Name="PK" Content="Vermogen in PK" HorizontalAlignment="Left" Margin="63,190,0,0" VerticalAlignment="Top" Checked="PK_Checked" IsChecked="True" Grid.ColumnSpan="2"/>
+        <Label Content="Merkgegevens:" HorizontalAlignment="Left" Margin="156,32,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <ListBox x:Name="Modellijst" Margin="45,265,599,394" SelectionChanged="Modellijst_SelectionChanged" Grid.ColumnSpan="2"/>
+        <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,234,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Rectangle HorizontalAlignment="Left" Height="192" Margin="156,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="205" Grid.Column="1"/>
+        <Label Content="Autogevens:" HorizontalAlignment="Left" Margin="156,265,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Hoofdkantoor" Content="Stad" HorizontalAlignment="Left" Margin="207,60,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Land" Content="Land" HorizontalAlignment="Left" Margin="207,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="textHoofdkantoor_Copy" Content="Serie" HorizontalAlignment="Left" Margin="156,294,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="textLand_Copy" Content="Model:" HorizontalAlignment="Left" Margin="156,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="Serie" Content="Serie" HorizontalAlignment="Left" Margin="234,294,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Model" Content="Model" HorizontalAlignment="Left" Margin="234,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="textLand_Copy1" Content="Vermogen:" HorizontalAlignment="Left" Margin="156,346,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="Vermogen" Content="Vermogen" HorizontalAlignment="Left" Margin="234,346,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
 
     </Grid>
 </Window>

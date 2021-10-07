@@ -18,11 +18,7 @@ using System.Data;
 
 namespace Eindopdracht
 {
-    public class merk
-    {
-        public int ID;
-        public string naam;
-    }
+    
     public partial class MainWindow : Window
     {
 
@@ -30,7 +26,7 @@ namespace Eindopdracht
         //static string connectionstring = "connectionstring van milan";
         static string connectionstring = "Server=LAPTOP-7VVM9TQ3\\SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
         SqlConnection Connectie = new SqlConnection(connectionstring);
-        string text;
+        public bool KeuzeKW;
 
 
 
@@ -56,21 +52,12 @@ namespace Eindopdracht
             }
             Connectie.Close();
         }
-
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(text);
-        }
-
         private void Merk_Changed(object sender, SelectionChangedEventArgs e)
         {
             //listview updaten naar types gebaseerd op onderstaande text
             int selectedmerk = Merk.SelectedIndex + 1;
 
-            string query = "select strlandnaam, strstadsnaam, strMerknaam from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
-
+            string query = "select * from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
             SqlCommand cmd = new SqlCommand(query, Connectie);
             Connectie.Open();
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -79,7 +66,8 @@ namespace Eindopdracht
                 {
                     Land.Content = reader["strlandnaam"].ToString();
                     Hoofdkantoor.Content = reader["strstadsnaam"].ToString();
-                  //  Logo.Source = reader["strMerklogo"];
+                    Logo.Source = new ImageSourceConverter().ConvertFromString(reader["strMerklogo"].ToString()) as ImageSource;
+
                 }
             }
             Connectie.Close();
@@ -90,15 +78,14 @@ namespace Eindopdracht
 
         private void KW_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("KW berekenen");
-            //Maken dat hij hercalculeert met de waarde :)
+            KeuzeKW = true;
+            // hercalcureren waardes
 
         }
 
         private void PK_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("PK Berekenen");
-            //Maken dat hij hercalculeert met de waarde :)
+            KeuzeKW = false;
         }
 
 
