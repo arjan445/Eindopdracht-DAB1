@@ -107,5 +107,10 @@ namespace Eindopdracht
             Serie.Content = "Golfje";
             Model.Content = "Pizza";
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
