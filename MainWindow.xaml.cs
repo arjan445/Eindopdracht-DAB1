@@ -73,7 +73,7 @@ namespace Eindopdracht
             Connectie.Close();
 
             //updaten van de gegevens in de listbox (ff query schrijven)
-            //Doet milan
+            //Doet milantest
         }
 
         private void KW_Checked(object sender, RoutedEventArgs e)
