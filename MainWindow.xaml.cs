@@ -18,7 +18,11 @@ using System.Data;
 
 namespace Eindopdracht
 {
-
+    public class merk
+    {
+        public int ID;
+        public string naam;
+    }
     public partial class MainWindow : Window
     {
 
@@ -40,15 +44,15 @@ namespace Eindopdracht
         private void Merk_Loaded(object sender, RoutedEventArgs e)
         {
             Connectie.Open();
-            string query = "SELECT Strland FROM TblLand;";
+            string query = "SELECT strMerknaam FROM tblMerk;";
             SqlCommand cmd = new SqlCommand(query, Connectie);
             SqlDataAdapter adapter = new SqlDataAdapter(query, Connectie);
             DataTable data = new DataTable();
             adapter.Fill(data);
 
-               for (int i = 0; i < data.Rows.Count; i++)
+            for (int i = 0; i < data.Rows.Count; i++)
             {
-                Merk.Items.Add(data.Rows[i]["StrLand"].ToString());
+                Merk.Items.Add(data.Rows[i]["strMerknaam"].ToString());
             }
             Connectie.Close();
         }
@@ -63,26 +67,25 @@ namespace Eindopdracht
         private void Merk_Changed(object sender, SelectionChangedEventArgs e)
         {
             //listview updaten naar types gebaseerd op onderstaande text
-            text = (Merk.Items[Merk.SelectedIndex].ToString());
+            int selectedmerk = Merk.SelectedIndex + 1;
 
-            //Hiermee kunnen we de tekst van het land/stad updaten (ff query bedenken)
-            Hoofdkantoor.Content = "test";
-            Land.Content = "test2";
+            string query = "select strlandnaam, strstadsnaam, strMerknaam from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
 
-
-            //updaten van de gegevens in de listbox (ff query schrijven)
-            Connectie.Open();
-            string query = "SELECT Strland FROM TblLand;";
             SqlCommand cmd = new SqlCommand(query, Connectie);
-            SqlDataAdapter adapter = new SqlDataAdapter(query, Connectie);
-            DataTable data = new DataTable();
-            adapter.Fill(data);
-
-            for (int i = 0; i < data.Rows.Count; i++)
+            Connectie.Open();
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Modellijst.Items.Add(data.Rows[i]["StrLand"].ToString());
+                while (reader.Read())
+                {
+                    Land.Content = reader["strlandnaam"].ToString();
+                    Hoofdkantoor.Content = reader["strstadsnaam"].ToString();
+                  //  Logo.Source = reader["strMerklogo"];
+                }
             }
             Connectie.Close();
+
+            //updaten van de gegevens in de listbox (ff query schrijven)
+            //Doet milan
         }
 
         private void KW_Checked(object sender, RoutedEventArgs e)
@@ -106,10 +109,6 @@ namespace Eindopdracht
             Vermogen.Content = "1000PK";
             Serie.Content = "Golfje";
             Model.Content = "Pizza";
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
         }
     }

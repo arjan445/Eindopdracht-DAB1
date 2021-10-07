@@ -19,9 +19,7 @@
         <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Checked="KW_Checked"/>
         <RadioButton x:Name="PK" Content="Vermogen in PK" HorizontalAlignment="Left" Margin="63,190,0,0" VerticalAlignment="Top" Checked="PK_Checked"/>
         <Label Content="Merkgegevens:" HorizontalAlignment="Left" Margin="266,32,0,0" VerticalAlignment="Top"/>
-        <ListBox Margin="45,265,599,394" SelectionChanged="ListBox_SelectionChanged">
-            <ListBox x:Name="Modellijst" Height="215" Width="142" SelectionChanged="Modellijst_SelectionChanged"/>
-        </ListBox>
+        <ListBox x:Name="Modellijst" Margin="45,265,599,394" SelectionChanged="Modellijst_SelectionChanged"/>
         <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,234,0,0" VerticalAlignment="Top"/>
         <Rectangle HorizontalAlignment="Left" Height="192" Margin="266,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="205"/>
         <Label Content="Autogevens:" HorizontalAlignment="Left" Margin="266,265,0,0" VerticalAlignment="Top"/>
