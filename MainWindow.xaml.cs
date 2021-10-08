@@ -79,7 +79,7 @@ namespace Eindopdracht
 
 
             Modellijst.Items.Clear();
-            string querySerieModel = "select CONCAT(strSerienaam,' ',strModelnaam) as data, tblSerieModel.ID FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE merkID = " + selectedmerk;
+            string querySerieModel = "select CONCAT(strSerienaam,' ',strModelnaam) as data, tblSerieModel.ID FROM tblSerieModel RIGHT JOIN tblSerie ON tblSerieModel.serieID = tblserie.ID LEFT JOIN tblModel ON tblseriemodel.modelID = tblModel.ID WHERE tblserie.merkID =" + selectedmerk;
             SqlCommand cmdSerieModel = new SqlCommand(querySerieModel, Connectie);
             SqlDataAdapter adapter = new SqlDataAdapter(querySerieModel, Connectie);
             DataTable data = new DataTable();
@@ -142,6 +142,7 @@ namespace Eindopdracht
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
+            MessageBox.Show(selectedmodel);
             
             string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
