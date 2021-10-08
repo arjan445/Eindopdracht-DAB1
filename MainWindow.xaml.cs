@@ -31,7 +31,7 @@ namespace Eindopdracht
         //static string connectionstring = "connectionstring van milan";
         static string connectionstring = "Server=LAPTOP-7VVM9TQ3\\SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
         SqlConnection Connectie = new SqlConnection(connectionstring);
-        public bool KeuzeKW;
+        public bool KeuzeKW = true;
 
 
 
@@ -99,13 +99,13 @@ namespace Eindopdracht
 
         private void KW_Checked(object sender, RoutedEventArgs e)
         {
-            KeuzeKW = true;
+            KeuzeKW = false;
             recalculate();
         }
 
         private void PK_Checked(object sender, RoutedEventArgs e)
         {
-            KeuzeKW = false;
+            KeuzeKW = true;
             recalculate();
         }
 
@@ -122,29 +122,29 @@ namespace Eindopdracht
                     int vermogen = Int32.Parse(reader["intVermogen"].ToString());
                     if (KeuzeKW == false)
                     {
-                        double vermogencalculated = Math.Round(vermogen * 1.362, 2);
-                        Vermogen.Content = vermogencalculated + " PK";
+                        double vermogencalculated = Math.Round(vermogen / 1.362, 0);
+                        Vermogen.Content = vermogencalculated + " KW";
 
                     }
                     else
                     {
                         //calculeer vermogen in KW
-                        Vermogen.Content = vermogen + " KW";
+                        Vermogen.Content = vermogen + " PK";
 
                     }
                 }
             }
             Connectie.Close();
-
+                
         }
 
 
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
-            MessageBox.Show(selectedmodel);
+            MessageBox.Show(selectedmodel.ToString());
             
-            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
+            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.serieID LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
             Connectie.Open();
             using (SqlDataReader reader = cmdModelgegevens.ExecuteReader())
@@ -157,13 +157,13 @@ namespace Eindopdracht
                     int vermogen = Int32.Parse(reader["intVermogen"].ToString());
                     if (KeuzeKW == false)
                     {
-                        double vermogencalculated = Math.Round(vermogen * 1.362, 2) ;
-                        Vermogen.Content = vermogencalculated + " PK";
+                        double vermogencalculated = Math.Round(vermogen /    1.362, 0) ;
+                        Vermogen.Content = vermogencalculated + " KW";
 
                     } else
                     {
                         //calculeer vermogen in KW
-                        Vermogen.Content = vermogen + " KW";
+                        Vermogen.Content = vermogen + " PK";
                         
                     }
                 }
