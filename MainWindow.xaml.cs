@@ -21,7 +21,12 @@ namespace Eindopdracht
 
     public partial class MainWindow : Window
     {
-
+        public class SerieModel
+        {
+            public int ID;
+            public string Seriemodel;
+            
+        }
 
         static string connectionstring = "Server=DESKTOP-D767JJA\\TEW_SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
         //static string connectionstring = "Server=LAPTOP-7VVM9TQ3\\SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
@@ -80,13 +85,10 @@ namespace Eindopdracht
             DataTable data = new DataTable();
             adapter.Fill(data);
 
-            for (int i = 0; i < data.Rows.Count; i++)
+
+            for(int i = 0; i < data.Rows.Count; i++)
             {
-                if (i == 0) // maakt listbox leeg bij het selecteren van een ander merk
-                {
-                    Type.Items.Clear();
-                }
-                Type.Items.Add(data.Rows[i]["strSerienaam"].ToString());
+                Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
             }
             Connectie.Close();
         }
@@ -112,6 +114,19 @@ namespace Eindopdracht
             Serie.Content = "Golfje";
             Model.Content = "Pizza";
 
+            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
+            SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
+            Connectie.Open();
+            using (SqlDataReader reader = cmdModelgegevens.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Serie.Content = reader["strSerienaam"].ToString();
+                    Model.Content = reader["strModelnaam"].ToString();
+                    Vermogen.Content = 0;
+                }
+            }
+            Connectie.Close();
         }
     }
 }
