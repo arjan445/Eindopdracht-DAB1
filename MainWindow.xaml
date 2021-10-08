@@ -18,8 +18,8 @@
         <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="250,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/fiat.jpg" Grid.Column="1"/>
         <Label x:Name="textHoofdkantoor" Content="Stad:" HorizontalAlignment="Left" Margin="156,60,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="textLand" Content="Land:" HorizontalAlignment="Left" Margin="156,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
-        <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Checked="KW_Checked" Grid.ColumnSpan="2"/>
-        <RadioButton x:Name="PK" Content="Vermogen in PK" HorizontalAlignment="Left" Margin="63,190,0,0" VerticalAlignment="Top" Checked="PK_Checked" IsChecked="True" Grid.ColumnSpan="2"/>
+        <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="KW_Checked"/>
+        <RadioButton x:Name="PK" Content="Vermogen in PK" HorizontalAlignment="Left" Margin="63,190,0,0" VerticalAlignment="Top" IsChecked="True" Grid.ColumnSpan="2" Click="PK_Checked"/>
         <Label Content="Merkgegevens:" HorizontalAlignment="Left" Margin="156,32,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <ListBox x:Name="Modellijst" Margin="45,265,599,394" SelectionChanged="Modellijst_SelectionChanged" Grid.ColumnSpan="2" DisplayMemberPath="Seriemodel" SelectedValuePath="ID"/>
         <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,234,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>

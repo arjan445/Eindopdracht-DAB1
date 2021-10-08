@@ -100,13 +100,42 @@ namespace Eindopdracht
         private void KW_Checked(object sender, RoutedEventArgs e)
         {
             KeuzeKW = true;
-            // hercalcureren waardes
-
+            recalculate();
         }
 
         private void PK_Checked(object sender, RoutedEventArgs e)
         {
             KeuzeKW = false;
+            recalculate();
+        }
+
+        private void recalculate()
+        {
+            int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
+            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
+            SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
+            Connectie.Open();
+            using (SqlDataReader reader = cmdModelgegevens.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int vermogen = Int32.Parse(reader["intVermogen"].ToString());
+                    if (KeuzeKW == false)
+                    {
+                        double vermogencalculated = Math.Round(vermogen * 1.362, 2);
+                        Vermogen.Content = vermogencalculated + " PK";
+
+                    }
+                    else
+                    {
+                        //calculeer vermogen in KW
+                        Vermogen.Content = vermogen + " KW";
+
+                    }
+                }
+            }
+            Connectie.Close();
+
         }
 
 
@@ -121,9 +150,21 @@ namespace Eindopdracht
             {
                 while (reader.Read())
                 {
+                    
                     Serie.Content = reader["strSerienaam"].ToString();
                     Model.Content = reader["strModelnaam"].ToString();
-                    Vermogen.Content = 0;
+                    int vermogen = Int32.Parse(reader["intVermogen"].ToString());
+                    if (KeuzeKW == false)
+                    {
+                        double vermogencalculated = Math.Round(vermogen * 1.362, 2) ;
+                        Vermogen.Content = vermogencalculated + " PK";
+
+                    } else
+                    {
+                        //calculeer vermogen in KW
+                        Vermogen.Content = vermogen + " KW";
+                        
+                    }
                 }
             }
             Connectie.Close();
