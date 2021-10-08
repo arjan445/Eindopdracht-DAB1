@@ -72,8 +72,7 @@ namespace Eindopdracht
             }
             Connectie.Close();
 
-            //updaten van de gegevens in de listbox (ff query schrijven)
-            //Doet milantest
+            //updaten van de gegevens in de listbox
             Connectie.Open();
             string querytype = "select * from tblSerie left join tblMerk on tblSerie.merkID = tblMerk.ID where tblMerk.ID =" + selectedmerk;
             SqlCommand cmdtype = new SqlCommand(querytype, Connectie);
@@ -83,7 +82,7 @@ namespace Eindopdracht
 
             for (int i = 0; i < data.Rows.Count; i++)
             {
-                if (i == 0)
+                if (i == 0) // maakt listbox leeg bij het selecteren van een ander merk
                 {
                     Type.Items.Clear();
                 }
