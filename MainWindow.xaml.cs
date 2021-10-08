@@ -39,6 +39,11 @@ namespace Eindopdracht
         public MainWindow()
         {
             InitializeComponent();
+            Land.Content = "";
+            Hoofdkantoor.Content = "";
+            Vermogen.Content = "";
+            Serie.Content = "";
+            Model.Content = "";
         }
 
         //Merken gedeelte
@@ -142,7 +147,6 @@ namespace Eindopdracht
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
-            MessageBox.Show(selectedmodel.ToString());
             
             string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.serieID LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);

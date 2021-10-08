@@ -15,7 +15,7 @@
         <Rectangle HorizontalAlignment="Left" Height="192" Margin="45,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="156" Grid.ColumnSpan="2"/>
         <ComboBox x:Name="Merk" HorizontalAlignment="Left" Margin="63,58,0,0" VerticalAlignment="Top" Width="120" Loaded="Merk_Loaded" SelectionChanged="Merk_Changed" Grid.ColumnSpan="2"/>
         <Label Content="Selecteer automerk" HorizontalAlignment="Left" Margin="67,32,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="250,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/fiat.jpg" Grid.Column="1"/>
+        <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="250,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/white.jpg" Grid.Column="1"/>
         <Label x:Name="textHoofdkantoor" Content="Stad:" HorizontalAlignment="Left" Margin="156,60,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="textLand" Content="Land:" HorizontalAlignment="Left" Margin="156,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
         <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="KW_Checked"/>
