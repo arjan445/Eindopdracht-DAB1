@@ -21,7 +21,12 @@ namespace Eindopdracht
     
     public partial class MainWindow : Window
     {
-
+        public class SerieModel
+        {
+            public int ID;
+            public string Seriemodel;
+            
+        }
 
         //static string connectionstring = "connectionstring van milan";
         static string connectionstring = "Server=LAPTOP-7VVM9TQ3\\SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
@@ -57,10 +62,10 @@ namespace Eindopdracht
             //listview updaten naar types gebaseerd op onderstaande text
             int selectedmerk = Merk.SelectedIndex + 1;
 
-            string query = "select * from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
-            SqlCommand cmd = new SqlCommand(query, Connectie);
+            string queryMerkgegevens = "select * from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
+            SqlCommand cmdMerkGegevens = new SqlCommand(queryMerkgegevens, Connectie);
             Connectie.Open();
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            using (SqlDataReader reader = cmdMerkGegevens.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -72,8 +77,23 @@ namespace Eindopdracht
             }
             Connectie.Close();
 
-            //updaten van de gegevens in de listbox (ff query schrijven)
-            //Doet milantest
+
+            Modellijst.Items.Clear();
+            string querySerieModel = "select CONCAT(strSerienaam,' ',strModelnaam) as data, tblSerieModel.ID FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE merkID = " + selectedmerk;
+            SqlCommand cmdSerieModel = new SqlCommand(querySerieModel, Connectie);
+            SqlDataAdapter adapter = new SqlDataAdapter(querySerieModel, Connectie);
+            DataTable data = new DataTable();
+            adapter.Fill(data);
+
+
+            for(int i = 0; i < data.Rows.Count; i++)
+            {
+                Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
+            }
+            Connectie.Close();
+
+
+        
         }
 
         private void KW_Checked(object sender, RoutedEventArgs e)
@@ -91,12 +111,21 @@ namespace Eindopdracht
 
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //gegevens updaten op aanpassing
+            int selectedmodel = Modellijst.SelectedIndex + 1;
 
-            Vermogen.Content = "1000PK";
-            Serie.Content = "Golfje";
-            Model.Content = "Pizza";
-
+            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
+            SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
+            Connectie.Open();
+            using (SqlDataReader reader = cmdModelgegevens.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Serie.Content = reader["strSerienaam"].ToString();
+                    Model.Content = reader["strModelnaam"].ToString();
+                    Vermogen.Content = 0;
+                }
+            }
+            Connectie.Close();
         }
     }
 }
