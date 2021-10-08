@@ -23,9 +23,9 @@ namespace Eindopdracht
     {
         public class SerieModel
         {
-            public int ID;
-            public string Seriemodel;
-            
+            public int ID { get; set; }
+            public string Seriemodel { get; set; }
+
         }
 
         //static string connectionstring = "connectionstring van milan";
@@ -79,7 +79,7 @@ namespace Eindopdracht
 
 
             Modellijst.Items.Clear();
-            string querySerieModel = "select CONCAT(strSerienaam,' ',strModelnaam) as data FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE merkID = " + selectedmerk;
+            string querySerieModel = "select CONCAT(strSerienaam,' ',strModelnaam) as data, tblSerieModel.ID FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE merkID = " + selectedmerk;
             SqlCommand cmdSerieModel = new SqlCommand(querySerieModel, Connectie);
             SqlDataAdapter adapter = new SqlDataAdapter(querySerieModel, Connectie);
             DataTable data = new DataTable();
@@ -88,8 +88,8 @@ namespace Eindopdracht
 
             for(int i = 0; i < data.Rows.Count; i++)
             {
-                //Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
-                Modellijst.Items.Add(data.Rows[i]["data"].ToString());
+                Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
+                //Modellijst.Items.Add(data.Rows[i]["data"].ToString());
             }
             Connectie.Close();
 
@@ -112,8 +112,8 @@ namespace Eindopdracht
 
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedmodel = Modellijst.SelectedIndex + 1;
-
+            int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
+            
             string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
             Connectie.Open();
