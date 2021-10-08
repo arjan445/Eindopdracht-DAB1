@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
-
+//
 
 namespace Eindopdracht
 {
@@ -23,9 +23,9 @@ namespace Eindopdracht
     {
         public class SerieModel
         {
-            public int ID;
-            public string Seriemodel;
-            
+            public int ID { get; set; }
+            public string Seriemodel { get; set; }
+
         }
 
         static string connectionstring = "Server=DESKTOP-D767JJA\\TEW_SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
@@ -62,10 +62,10 @@ namespace Eindopdracht
             //listview updaten naar types gebaseerd op onderstaande text
             int selectedmerk = Merk.SelectedIndex + 1;
 
-            string query = "select * from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
-            SqlCommand cmd = new SqlCommand(query, Connectie);
+            string queryMerkgegevens = "select * from tblLand inner join tblHoofdlocatie on tblHoofdlocatie.landID = tblLand.ID inner join tblMerk on tblMerk.hoofdlocatieID = tblHoofdlocatie.ID WHERE tblMerk.ID =" + selectedmerk;
+            SqlCommand cmdMerkGegevens = new SqlCommand(queryMerkgegevens, Connectie);
             Connectie.Open();
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            using (SqlDataReader reader = cmdMerkGegevens.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -77,42 +77,72 @@ namespace Eindopdracht
             }
             Connectie.Close();
 
-            //updaten van de gegevens in de listbox
-            Connectie.Open();
-            string querytype = "select * from tblSerie left join tblMerk on tblSerie.merkID = tblMerk.ID where tblMerk.ID =" + selectedmerk;
-            SqlCommand cmdtype = new SqlCommand(querytype, Connectie);
-            SqlDataAdapter adapter = new SqlDataAdapter(querytype, Connectie);
+
+            Modellijst.Items.Clear();
+            string querySerieModel = "select CONCAT(strSerienaam,' ',strModelnaam) as data, tblSerieModel.ID FROM tblSerieModel RIGHT JOIN tblSerie ON tblSerieModel.serieID = tblserie.ID LEFT JOIN tblModel ON tblseriemodel.modelID = tblModel.ID WHERE tblserie.merkID =" + selectedmerk;
+            SqlCommand cmdSerieModel = new SqlCommand(querySerieModel, Connectie);
+            SqlDataAdapter adapter = new SqlDataAdapter(querySerieModel, Connectie);
             DataTable data = new DataTable();
             adapter.Fill(data);
 
 
-            for(int i = 0; i < data.Rows.Count; i++)
+            for (int i = 0; i < data.Rows.Count; i++)
             {
                 Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
+                //Modellijst.Items.Add(data.Rows[i]["data"].ToString());
             }
             Connectie.Close();
+
+
+
         }
-        //select strSerienaam,strModelnaam from tblMerk left join tblSerie on tblMerk.ID = tblSerie.merkID left join tblSerieModel on tblSerie.ID = tblSerieModel.serieID left join tblModel on tblSerieModel.modelID = tblModel.ID where tblMerk.ID = 3
+
         private void KW_Checked(object sender, RoutedEventArgs e)
         {
             KeuzeKW = true;
-            // hercalcureren waardes
-
+            recalculate();
         }
 
         private void PK_Checked(object sender, RoutedEventArgs e)
         {
             KeuzeKW = false;
+            recalculate();
+        }
+
+        private void recalculate()
+        {
+            int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
+            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
+            SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
+            Connectie.Open();
+            using (SqlDataReader reader = cmdModelgegevens.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int vermogen = Int32.Parse(reader["intVermogen"].ToString());
+                    if (KeuzeKW == true)
+                    {
+                        double vermogencalculated = Math.Round(vermogen * 1.362, 2);
+                        Vermogen.Content = vermogencalculated + " KW";
+
+                    }
+                    else
+                    {
+                        //calculeer vermogen in KW
+                        Vermogen.Content = vermogen + " PK";
+
+                    }
+                }
+            }
+            Connectie.Close();
+
         }
 
 
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //gegevens updaten op aanpassing
-
-            Vermogen.Content = "1000PK";
-            Serie.Content = "Golfje";
-            Model.Content = "Pizza";
+            int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
+            MessageBox.Show(selectedmodel);
 
             string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
@@ -121,9 +151,23 @@ namespace Eindopdracht
             {
                 while (reader.Read())
                 {
+
                     Serie.Content = reader["strSerienaam"].ToString();
                     Model.Content = reader["strModelnaam"].ToString();
-                    Vermogen.Content = 0;
+                    int vermogen = Int32.Parse(reader["intVermogen"].ToString());
+                    if (KeuzeKW == false)
+                    {
+                        //toon het vermogen in PK
+                        Vermogen.Content = vermogen + " PK";
+
+                    }
+                    else
+                    {
+                        //Bereken het vermogen van PK naar KW
+                        double vermogencalculated = Math.Round(vermogen / 1.362, 2);
+                        Vermogen.Content = vermogencalculated + " KW";
+
+                    }
                 }
             }
             Connectie.Close();
