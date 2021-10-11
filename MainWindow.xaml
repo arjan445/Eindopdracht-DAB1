@@ -5,34 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eindopdracht"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="800">
-    <Grid>
+        Title="MainWindow" Height="646" Width="800" ResizeMode="NoResize">
+    <Grid Height="540" VerticalAlignment="Top" HorizontalAlignment="Left" Width="800">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="110*"/>
+            <ColumnDefinition Width="257*"/>
+            <ColumnDefinition Width="433*"/>
         </Grid.ColumnDefinitions>
-        <Rectangle HorizontalAlignment="Left" Height="192" Margin="156,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="205" Grid.Column="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="192" Margin="156,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="205" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Rectangle HorizontalAlignment="Left" Height="192" Margin="45,32,0,0" Stroke="Black" VerticalAlignment="Top" Width="156" Grid.ColumnSpan="2"/>
         <ComboBox x:Name="Merk" HorizontalAlignment="Left" Margin="63,58,0,0" VerticalAlignment="Top" Width="120" Loaded="Merk_Loaded" SelectionChanged="Merk_Changed" Grid.ColumnSpan="2"/>
         <Label Content="Selecteer automerk" HorizontalAlignment="Left" Margin="67,32,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="250,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/white.jpg" Grid.Column="1"/>
+        <Image x:Name="Logo" HorizontalAlignment="Left" Height="110" Margin="250,110,0,0" VerticalAlignment="Top" Width="108" Source="https://bongersonline.nl/logo/white.jpg" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Label x:Name="textHoofdkantoor" Content="Stad:" HorizontalAlignment="Left" Margin="156,60,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="textLand" Content="Land:" HorizontalAlignment="Left" Margin="156,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
         <RadioButton x:Name="KW" Content="Vermogen in KW" HorizontalAlignment="Left" Margin="63,170,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="KW_Checked"/>
         <RadioButton x:Name="PK" Content="Vermogen in PK" HorizontalAlignment="Left" Margin="63,190,0,0" VerticalAlignment="Top" IsChecked="True" Grid.ColumnSpan="2" Click="PK_Checked"/>
         <Label Content="Merkgegevens:" HorizontalAlignment="Left" Margin="156,32,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <ListBox x:Name="Modellijst" Margin="45,265,599,394" SelectionChanged="Modellijst_SelectionChanged" Grid.ColumnSpan="2" DisplayMemberPath="Seriemodel" SelectedValuePath="ID"/>
-        <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="81,234,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Rectangle HorizontalAlignment="Left" Height="192" Margin="156,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="205" Grid.Column="1"/>
-        <Label Content="Autogevens:" HorizontalAlignment="Left" Margin="156,265,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <ListBox x:Name="Modellijst" Margin="45,0,0,34" SelectionChanged="Modellijst_SelectionChanged" Grid.ColumnSpan="2" DisplayMemberPath="Seriemodel" SelectedValuePath="ID" HorizontalAlignment="Left" Width="156" Height="225" VerticalAlignment="Bottom"/>
+        <Label Content="Selecteer type" HorizontalAlignment="Left" Margin="75,244,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Rectangle HorizontalAlignment="Left" Height="192" Margin="155,300,0,0" Stroke="Black" VerticalAlignment="Top" Width="205" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label Content="Autogevens:" HorizontalAlignment="Left" Margin="155,300,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="Hoofdkantoor" Content="Stad" HorizontalAlignment="Left" Margin="207,60,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="Land" Content="Land" HorizontalAlignment="Left" Margin="207,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
-        <Label x:Name="textHoofdkantoor_Copy" Content="Serie" HorizontalAlignment="Left" Margin="156,294,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label x:Name="textLand_Copy" Content="Model:" HorizontalAlignment="Left" Margin="156,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
-        <Label x:Name="Serie" Content="Serie" HorizontalAlignment="Left" Margin="234,294,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label x:Name="Model" Content="Model" HorizontalAlignment="Left" Margin="234,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
-        <Label x:Name="textLand_Copy1" Content="Vermogen:" HorizontalAlignment="Left" Margin="156,346,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
-        <Label x:Name="Vermogen" Content="Vermogen" HorizontalAlignment="Left" Margin="234,346,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="textHoofdkantoor_Copy" Content="Serie" HorizontalAlignment="Left" Margin="155,329,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="textLand_Copy" Content="Model:" HorizontalAlignment="Left" Margin="155,355,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="Serie" Content="Serie" HorizontalAlignment="Left" Margin="233,329,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label x:Name="Model" Content="Model" HorizontalAlignment="Left" Margin="233,355,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label x:Name="textLand_Copy1" Content="Vermogen:" HorizontalAlignment="Left" Margin="155,381,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1"/>
+        <Label x:Name="Vermogen" Content="Vermogen" HorizontalAlignment="Left" Margin="233,381,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.598" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Image Grid.Column="2" HorizontalAlignment="Left" Height="151" Margin="128,34,0,0" VerticalAlignment="Top" Width="284" Source="https://bongersonline.nl/logo/avans.jpg"/>
+        <Image Grid.Column="2" HorizontalAlignment="Left" Height="95" Margin="178,312,0,0" VerticalAlignment="Top" Width="179" Source="https://bongersonline.nl/logo/nfs.jpg"/>
 
     </Grid>
 </Window>

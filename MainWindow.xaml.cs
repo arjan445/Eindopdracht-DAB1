@@ -94,7 +94,6 @@ namespace Eindopdracht
             for(int i = 0; i < data.Rows.Count; i++)
             {
                 Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
-                //Modellijst.Items.Add(data.Rows[i]["data"].ToString());
             }
             Connectie.Close();
 
