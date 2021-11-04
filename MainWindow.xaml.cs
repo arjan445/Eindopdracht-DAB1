@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
-//
+
 
 namespace Eindopdracht
 {
@@ -31,7 +31,7 @@ namespace Eindopdracht
         static string connectionstring = "Server=DESKTOP-D767JJA\\TEW_SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
         //static string connectionstring = "Server=LAPTOP-7VVM9TQ3\\SQLEXPRESS;Database=DAB1_Eindopdracht;Trusted_Connection=True;";
         SqlConnection Connectie = new SqlConnection(connectionstring);
-        public bool KeuzeKW;
+        public bool KeuzeKW = true;
 
 
 
@@ -39,6 +39,11 @@ namespace Eindopdracht
         public MainWindow()
         {
             InitializeComponent();
+            Land.Content = "";
+            Hoofdkantoor.Content = "";
+            Vermogen.Content = "";
+            Serie.Content = "";
+            Model.Content = "";
         }
 
         //Merken gedeelte
@@ -89,7 +94,6 @@ namespace Eindopdracht
             for (int i = 0; i < data.Rows.Count; i++)
             {
                 Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
-                //Modellijst.Items.Add(data.Rows[i]["data"].ToString());
             }
             Connectie.Close();
 
@@ -99,13 +103,13 @@ namespace Eindopdracht
 
         private void KW_Checked(object sender, RoutedEventArgs e)
         {
-            KeuzeKW = true;
+            KeuzeKW = false;
             recalculate();
         }
 
         private void PK_Checked(object sender, RoutedEventArgs e)
         {
-            KeuzeKW = false;
+            KeuzeKW = true;
             recalculate();
         }
 
@@ -120,9 +124,9 @@ namespace Eindopdracht
                 while (reader.Read())
                 {
                     int vermogen = Int32.Parse(reader["intVermogen"].ToString());
-                    if (KeuzeKW == true)
+                    if (KeuzeKW == false)
                     {
-                        double vermogencalculated = Math.Round(vermogen * 1.362, 2);
+                        double vermogencalculated = Math.Round(vermogen / 1.362, 0);
                         Vermogen.Content = vermogencalculated + " KW";
 
                     }
@@ -142,9 +146,8 @@ namespace Eindopdracht
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
-            MessageBox.Show(selectedmodel);
 
-            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.id LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
+            string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.serieID LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
             Connectie.Open();
             using (SqlDataReader reader = cmdModelgegevens.ExecuteReader())
@@ -157,15 +160,14 @@ namespace Eindopdracht
                     int vermogen = Int32.Parse(reader["intVermogen"].ToString());
                     if (KeuzeKW == false)
                     {
-                        //toon het vermogen in PK
-                        Vermogen.Content = vermogen + " PK";
+                        double vermogencalculated = Math.Round(vermogen / 1.362, 0);
+                        Vermogen.Content = vermogencalculated + " KW";
 
                     }
                     else
                     {
-                        //Bereken het vermogen van PK naar KW
-                        double vermogencalculated = Math.Round(vermogen / 1.362, 2);
-                        Vermogen.Content = vermogencalculated + " KW";
+                        //calculeer vermogen in KW
+                        Vermogen.Content = vermogen + " PK";
 
                     }
                 }
