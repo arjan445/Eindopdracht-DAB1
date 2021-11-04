@@ -18,7 +18,7 @@ using System.Data;
 
 namespace Eindopdracht
 {
-
+    
     public partial class MainWindow : Window
     {
         public class SerieModel
@@ -91,14 +91,14 @@ namespace Eindopdracht
             adapter.Fill(data);
 
 
-            for (int i = 0; i < data.Rows.Count; i++)
+            for(int i = 0; i < data.Rows.Count; i++)
             {
                 Modellijst.Items.Add(new SerieModel { Seriemodel = data.Rows[i]["data"].ToString(), ID = Int32.Parse(data.Rows[i]["ID"].ToString()) });
             }
             Connectie.Close();
 
 
-
+        
         }
 
         private void KW_Checked(object sender, RoutedEventArgs e)
@@ -139,14 +139,14 @@ namespace Eindopdracht
                 }
             }
             Connectie.Close();
-
+                
         }
 
 
         private void Modellijst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedmodel = Convert.ToInt32(Modellijst.SelectedValue);
-
+            
             string queryModelgegevens = "select * FROM tblSerieModel LEFT JOIN tblSerie ON tblSerie.ID = tblSerieModel.serieID LEFT JOIN tblModel ON tblSerieModel.modelID = tblModel.ID WHERE tblSerieModel.ID = " + selectedmodel;
             SqlCommand cmdModelgegevens = new SqlCommand(queryModelgegevens, Connectie);
             Connectie.Open();
@@ -154,21 +154,20 @@ namespace Eindopdracht
             {
                 while (reader.Read())
                 {
-
+                    
                     Serie.Content = reader["strSerienaam"].ToString();
                     Model.Content = reader["strModelnaam"].ToString();
                     int vermogen = Int32.Parse(reader["intVermogen"].ToString());
                     if (KeuzeKW == false)
                     {
-                        double vermogencalculated = Math.Round(vermogen / 1.362, 0);
+                        double vermogencalculated = Math.Round(vermogen /    1.362, 0) ;
                         Vermogen.Content = vermogencalculated + " KW";
 
-                    }
-                    else
+                    } else
                     {
                         //calculeer vermogen in KW
                         Vermogen.Content = vermogen + " PK";
-
+                        
                     }
                 }
             }
